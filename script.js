@@ -7,7 +7,7 @@ $(document).ready(() => {
 	
 
 	$(window).resize(() => {
-		clean().then(() => {draw()})
+		clean().then(() => {draw()}).then(() => handleInteraction())
 	})
 
 })
