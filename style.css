@@ -1,0 +1,96 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+html {
+	background-color: #000D1A;
+	font-size: 16px;
+	color: #FFF;
+}
+
+header {
+	background-color: #0080FF;
+	padding: 4px 24px;
+	position: sticky;
+	width: 100vw;
+}
+
+main {
+	padding: 12px 0;
+}
+
+h1 {
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+h3 {
+	font-size: 1.3rem;
+	font-weight: 500;
+	letter-spacing: .04rem;
+}
+
+h4 {
+	font-size: 1rem;
+	font-weight: 300;
+}
+
+span.material-icons {
+	font-size: 1rem;
+	vertical-align: middle;
+	padding-bottom: 2px;
+	color: #0080FF;
+	cursor: pointer;
+}
+
+#treemob {
+	width: 100%;
+	display: flex;
+	padding: 0 24px;
+}
+
+#tree-container {
+	width: 75%;
+}
+#distr-container {
+	width: 25%;
+}
+
+#stats-container {
+	width: 100vw;
+	display: flex;
+	padding: 0 24px;
+}
+
+#info {
+	display: none;
+	background-color: #FFF;
+	width: 300px;
+	padding: 8px 16px 16px;
+	position: absolute;
+}
+
+#info.show {
+	display: block;
+}
+
+#info section {
+	display: none;
+}
+
+#info section.show {
+	display: block;
+	color: #000D1A;
+}
+
+.stats {
+	width: 25%;
+	padding: 16px;
+}
+
+.light {
+	opacity: .2;
+}

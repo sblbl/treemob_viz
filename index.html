@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<title></title>
+</head>
+<body>
+	<header>
+		<h1>User #000</h1>
+	</header>
+	<main>
+		<div id="treemob">
+			<div id="tree-container">
+				<h3>Mobility tree <span id="tree-info-icon" class="material-icons info-icon">info</span></h3>
+				<div id="out-tree"></div>
+				<div id="in-tree"></div>
+			</div>
+			<div id="distr-container">
+				<h3>Fraction of leaves per level <span id="distr-info-icon" class="material-icons info-icon">info</span></h3>
+				<div id="bar-out"></div>
+				<div id="bar-in"></div>
+			</div>
+		</div>
+		<div id="stats-container">
+			<div id='outdeg' class="stats">
+				<h3>Median and max out-degree <span id="outdeg-info-icon" class="material-icons info-icon">info</span></h3>
+			</div>
+			<div id='tokvoc' class="stats">
+				<h3>Richness of the locations set <span id="tokvoc-info-icon" class="material-icons info-icon">info</span></h3>
+				<div>
+					<h4>Outcoming tree</h4>
+					<div id='tokvoc-out'></div>
+				</div>
+				<div>
+					<h4>Incoming tree</h4>
+					<div id='tokvoc-in'></div>
+				</div>
+				<div>
+					<h4>Whole tree</h4>
+					<div id='tokvoc-all'></div>
+				</div>
+			</div>
+		</div>
+		<div id="info">
+			<section id="tree-info">
+				<p>
+					The tree of the user's personal mobility. 
+					It is composed by two prefix trees starting from
+					a unique location: one encodes the paths arriving to it, 
+					the other the paths exiting from the root location.
+				</p>
+				<p>
+					The same location can appear in different branches of the tree
+					and the incoming trajectories could continue and become outcoming paths.
+				</p>
+			</section>
+			<section id="distr-info">
+				<p>
+					For each depth level of the incoming and the outcoming tree, 
+					it represents which percentage of all the leaf locations
+					are in that level.
+				</p>
+			</section>
+			<section id="outdeg-info">
+				<p>
+					The median and the maximum number of successor that a location node can have
+				</p>
+			</section>
+			<section id="tokvoc-info">
+				<p>
+					The location richness of a tree is the proportion between the number of
+					all the points traversed and the number of different locations encountered.
+				</p>
+				<p>
+					It gives information about how much habitudinary is the user: 
+					if the richness is low, in fact, it means that the same locations 
+					are traversed quite frequently; on the contrary, an elevated richness means 
+					that the user explores many different locations, and rarely returns on the same routes.
+				</p>
+			</section>
+		</div>
+	</main>
+	
+	<script type="text/javascript" src="in.js"></script>
+	<script type="text/javascript" src="out.js"></script>
+	<script type="text/javascript" src="tree.js"></script>
+	<script type="text/javascript" src="outdeg.js"></script>
+	<script type="text/javascript" src="tokvoc.js"></script>
+	<script type="text/javascript" src="barleaves.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
