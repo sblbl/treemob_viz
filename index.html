@@ -37,7 +37,7 @@
 				<div id='dist-tree-in'></div>
 			</div>
 			<div id='distr-container'>
-				<h3>Fraction of leaves per level <span id='distr-info-icon' class='material-icons info-icon'>info</span></h3>
+				<h3>Fraction of leaves per km <span id='distrdist-info-icon' class='material-icons info-icon'>info</span></h3>
 				<div id='bar-out-dist'></div>
 				<div id='bar-in-dist'></div>
 			</div>
@@ -90,12 +90,18 @@
 					prefix tree but mapped on the distance traveled.
 				</p>
 			</section>
-
 			<section id='distr-info'>
 				<p>
 					For each depth level of the incoming and the outcoming tree, 
-					it represents which percentage of all the leaf locations
-					are in that level.
+					it represents which percentage of all the leaves (start/end 
+					of a travel)are in that level.
+				</p>
+			</section>
+			<section id='distrdist-info'>
+				<p>
+					For each km far from the incoming/outcoming tree, 
+					it represents which percentage of all the leaves (start/end 
+					of a travel) are in that level.
 				</p>
 			</section>
 			<section id='outdeg-info'>
