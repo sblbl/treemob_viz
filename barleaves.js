@@ -20,7 +20,7 @@ function BarLeaves({
 		data = {}, 
 		bars = []
 
-	height = 320
+	//height = 320
 
 	let valscale = d3.scaleLinear()
 			.domain([0, leaves.length])

@@ -16,7 +16,7 @@ function Entropy({
 	const locs = Object.keys(n_weights), 
 			freqs = Object.values(n_weights),
 			totFreqs = freqs.reduce((partialSum, a) => partialSum + a, 0), 
-			entropies = freqs.map(function (d) {
+			entropies = freqs.map(d => {
 				return (- Math.log2(d / totFreqs))
 			})
 
@@ -32,11 +32,23 @@ function Entropy({
 			.range([padding, width-padding])
 
 	let histogram = d3.histogram()
-		.value(d => d)   // I need to give the vector of value
-		.domain(xscale.domain())  // then the domain of the graphic
-		.thresholds(xscale.ticks(parseInt(xscale.domain()[1]/0.5)))	
+		.value(d => d)
+		.domain(xscale.domain())
+		.thresholds(xscale.ticks(parseInt(xscale.domain()[1]/0.5)))
 
 	bins = histogram(entropies)
+
+	binClasses = []
+
+	bins.forEach(bin => {
+		let classes = []
+		for (let i = 0; i < locs.length; i++) {
+			if (entropies[i] > bin.x0 && entropies[i] <= bin.x1 ) {
+				classes.push(locs[i])
+			}
+		}
+		binClasses.push(classes)
+	})
 
 	let yscale = d3.scaleLinear()
 		.domain([0, d3.max(bins, d => d.length)])
@@ -103,6 +115,15 @@ function Entropy({
 		.enter()
 		.append('rect')
 			.attr('count', d => d.length)
+			.attr('class', ((d, i) => {
+				let c = 'entropy-bar '
+				if (binClasses[i].length > 0) {
+					for (j = 0; j < binClasses[i].length; j ++) {
+						c += binClasses[i][j] + ' '
+					}
+				}
+				return c
+			}))
 			.attr('x', d => xscale(d.x0))
 			.attr('y', d => height - paddingT - yscale(d.length))
 			.attr('width', d => xscale(d.x1) - xscale(d.x0))

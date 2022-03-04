@@ -1,7 +1,8 @@
 let statsW = 0, 
 	trees, 
 	currentTree, 
-	showDist = false
+	showDist = false,
+	treeH = 270
 
 $(document).ready(() => {
 	trees = {
@@ -86,14 +87,16 @@ let drawTrees = () => {
 			label: d => d.name,
 			n_weights : currentTree.n_weights,
 			stroke: '#FFD700',
-			start: 'top'
+			start: 'top',
+			height : treeH
 		})
 		$('#in-tree').append(in_chart)
 		let out_chart = Tree(currentTree.out_tree, {
 			label: d => d.name,
 			n_weights : currentTree.n_weights,
 			stroke: '#00E68E',
-			start: 'bottom'
+			start: 'bottom',
+			height : treeH
 		})
 		$('#out-tree').append(out_chart)	
 	} else {
@@ -103,7 +106,8 @@ let drawTrees = () => {
 			n_weights : currentTree.n_weights,
 			max_dist : currentTree.max_dist,
 			stroke: '#FFD700',
-			start: 'top'
+			start: 'top',
+			height : treeH
 		})
 		$('#dist-tree-in').append(dist_tree_in)
 		dist_tree_out = TreeDists(currentTree.out_tree, {
@@ -113,6 +117,7 @@ let drawTrees = () => {
 			max_dist : currentTree.max_dist,
 			stroke: '#00E68E',
 			start: 'bottom',	
+			height : treeH
 		})
 
 		$('#dist-tree-out').append(dist_tree_out)
@@ -127,12 +132,14 @@ let drawBars = () => {
 			target : '#in-tree', 
 			start : 'top',
 			color : '#FFD700',
+			height : treeH
 		})
 		$('#bar-in').append(bars_in)
 		let bars_out = BarLeaves({
 			target : '#out-tree', 
 			start : 'bottom',
-			color : '#00E68E'
+			color : '#00E68E',
+			height : treeH
 		})
 		$('#bar-out').append(bars_out)
 	} else {
@@ -140,12 +147,14 @@ let drawBars = () => {
 			target : '#dist-tree-in', 
 			start : 'top',
 			color : '#FFD700',
+			height : treeH
 		})
 		$('#bar-in-dist').append(bars_in)
 		let bars_out = BarLeavesDist({
 			target : '#dist-tree-out', 
 			start : 'bottom',
-			color : '#00E68E'
+			color : '#00E68E',
+			height : treeH
 		})
 		$('#bar-out-dist').append(bars_out)
 	}
@@ -160,7 +169,7 @@ let draw = () => {
 			statsW = $('.stats')[0].offsetWidth - (parseFloat(getComputedStyle($('.stats')[0]).paddingLeft)*2)
 			let deg_chart = OutDeg({
 				width : statsW, 
-				height : 220,
+				height : 188,
 				maxOutDeg_all : currentTree.maxOutDeg_all,
 				medianOutDeg_all : currentTree.medianOutDeg_all,
 
@@ -174,14 +183,14 @@ let draw = () => {
 
 			tokvoc_chart_all = TokenVocab({
 				width : statsW, 
-				height : 48,
+				height : 32,
 				perc : currentTree.tokvoc_all 
 			})
 			$('#tokvoc-all').append(tokvoc_chart_all)
 
 			tokvoc_chart_in = TokenVocab({
 				width : statsW, 
-				height : 48,
+				height : 32,
 				perc : currentTree.tokvoc_in, 
 				color : '#FFD700', 
 				color2 : '#FFEC80',
@@ -190,7 +199,7 @@ let draw = () => {
 
 			tokvoc_chart_out = TokenVocab({
 				width : statsW, 
-				height : 48,
+				height : 32,
 				perc : currentTree.tokvoc_out, 
 				color : '#00E68E', 
 				color2 : '#80FFCE',
@@ -199,21 +208,33 @@ let draw = () => {
 
 			entropy = Entropy({
 				n_weights : currentTree.n_weights,
+				height : 180,
 			})
 
 			document.querySelector('#entropy').append(entropy)
 		})
 
-		$('.node').hover( e => {
+		$('.node').hover(e => {
 			let $t = $(e.target),
 				loc = $t.attr('loc')
 			
 			$(`.node:not(.${loc})`).addClass('light')
+			$(`.entropy-bar:not(.${loc})`).addClass('light')
 			$('tree-link').addClass('light')
 
 		}, e => {
 			$('.light').removeClass('light')
 		})
+
+		/*$('.entropy-bar').hover(e => {
+			let $t = $(e.target),
+				classes = $t.attr('class').split(/\s+/)
+			for (i = 0; i < classes.length; i ++) {
+				
+			}
+		}, e => {
+			$('.light').removeClass('light')
+		})*/
 
 		return Promise.resolve()
 

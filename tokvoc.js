@@ -10,7 +10,7 @@ function TokenVocab({
 		strokeWidth = 1.8, 
 		strokeOpacity = 0.4, 
 		padding = 0,
-		paddingT = 10,
+		paddingT = 6,
 	} = {}){
 
 	const svg = d3.create('svg')
@@ -29,20 +29,20 @@ function TokenVocab({
 		.attr('x', padding)
 		.attr('y', paddingT)
 		.attr('width', xscale(100))
-		.attr('height', height-(paddingT*2))
+		.attr('height', height-(paddingT))
 		.attr('fill', color)
 
 	svg.append('rect')
 		.attr('x', padding)
 		.attr('y', paddingT)
 		.attr('width', xscale(perc))
-		.attr('height', height-(paddingT*2))
+		.attr('height', height-(paddingT))
 		.attr('fill', color2)
 
 	svg.append('text')
 		.text(perc + '%')
 		.attr('x', xscale(perc)+ 4)
-		.attr('y', height/2 + 6)
+		.attr('y', height/2 + 8)
 		.attr('text-anchor', 'left')
 		.attr('fill', '#000D1A')
 		.attr('font-size', 14)

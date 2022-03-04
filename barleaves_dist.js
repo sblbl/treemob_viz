@@ -22,8 +22,6 @@ function BarLeavesDist({
 		data = {}, 
 		bars = []
 
-	height = $target.height()
-
 	let valscale = d3.scaleLinear()
 			.domain([0, leaves.length])
 			.range([0, 100])

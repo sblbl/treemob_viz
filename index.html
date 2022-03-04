@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;900&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' type='text/css' href='style.css'>
+	<script src='https://cdn.jsdelivr.net/npm/d3@7'></script>
+	<script src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'></script>
+	<link rel='preconnect' href='https://fonts.googleapis.com'>
+	<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+	<link href='https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;900&display=swap' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/icon?family=Material+Icons'
+      rel='stylesheet'>
 	<title></title>
 </head>
 <body>
@@ -18,36 +18,36 @@
 		<h1>User <span id='username'>#000</span></h1>
 	</header>
 	<main>
-		<div id="treemob">
-			<div id="tree-container" class="tree-container">
-				<h3>Mobility tree <span id="tree-info-icon" class="material-icons info-icon">info</span><button class="toggle-treemob">To distance view</button></h3>
-				<div id="out-tree"></div>
-				<div id="in-tree"></div>
+		<div id='treemob'>
+			<div id='tree-container' class='tree-container'>
+				<h3>Mobility tree <span id='tree-info-icon' class='material-icons info-icon'>info</span><button class='toggle-treemob'>To distance view</button></h3>
+				<div id='out-tree'></div>
+				<div id='in-tree'></div>
 			</div>
-			<div id="distr-container">
-				<h3>Fraction of leaves per level <span id="distr-info-icon" class="material-icons info-icon">info</span></h3>
-				<div id="bar-out"></div>
-				<div id="bar-in"></div>
+			<div id='distr-container'>
+				<h3>Fraction of leaves per level <span id='distr-info-icon' class='material-icons info-icon'>info</span></h3>
+				<div id='bar-out'></div>
+				<div id='bar-in'></div>
 			</div>
 		</div>
 		<div id='treemob-dist'>
-			<div id="tree-container-distances" class="tree-container">
-				<h3>Tree with distances <span id="treedist-info-icon" class="material-icons info-icon">info</span><button class="toggle-treemob">To standard view</button></h3>
-				<div id="dist-tree-out"></div>
-				<div id="dist-tree-in"></div>
+			<div id='tree-container-distances' class='tree-container'>
+				<h3>Tree with distances <span id='treedist-info-icon' class='material-icons info-icon'>info</span><button class='toggle-treemob'>To standard view</button></h3>
+				<div id='dist-tree-out'></div>
+				<div id='dist-tree-in'></div>
 			</div>
-			<div id="distr-container">
-				<h3>Fraction of leaves per level <span id="distr-info-icon" class="material-icons info-icon">info</span></h3>
-				<div id="bar-out-dist"></div>
-				<div id="bar-in-dist"></div>
+			<div id='distr-container'>
+				<h3>Fraction of leaves per level <span id='distr-info-icon' class='material-icons info-icon'>info</span></h3>
+				<div id='bar-out-dist'></div>
+				<div id='bar-in-dist'></div>
 			</div>
 		</div>
-		<div id="stats-container">
-			<div id='outdeg' class="stats">
-				<h3>Median and max out-degree <span id="outdeg-info-icon" class="material-icons info-icon">info</span></h3>
+		<div id='stats-container'>
+			<div id='outdeg' class='stats'>
+				<h3>Median and max out-degree <span id='outdeg-info-icon' class='material-icons info-icon'>info</span></h3>
 			</div>
-			<div id='tokvoc' class="stats">
-				<h3>Richness of the locations set <span id="tokvoc-info-icon" class="material-icons info-icon">info</span></h3>
+			<div id='tokvoc' class='stats'>
+				<h3>Richness of the locations set <span id='tokvoc-info-icon' class='material-icons info-icon'>info</span></h3>
 				<div>
 					<h4>Outcoming tree</h4>
 					<div id='tokvoc-out'></div>
@@ -61,12 +61,12 @@
 					<div id='tokvoc-in'></div>
 				</div>
 			</div>
+			<div id='entropy' class='stats'>
+				<h3>Distribution of locations' entropies <span id='entropy-info-icon' class='material-icons info-icon'>info</span></h3>
+			</div>
 		</div>
-		<div id="entropy">
-			<h3>Distribution of locations' entropies</h3>
-		</div>
-		<div id="info">
-			<section id="tree-info">
+		<div id='info'>
+			<section id='tree-info'>
 				<p>
 					The tree of the user's personal mobility. 
 					It is composed by two prefix trees starting from
@@ -78,26 +78,26 @@
 					and the incoming trajectories could continue and become outcoming paths.
 				</p>
 			</section>
-			<section id="treedist-info">
+			<section id='treedist-info'>
 				<p>
 					The same representation of the mobility
 					prefix tree but mapped on the distance traveled.
 				</p>
 			</section>
 
-			<section id="distr-info">
+			<section id='distr-info'>
 				<p>
 					For each depth level of the incoming and the outcoming tree, 
 					it represents which percentage of all the leaf locations
 					are in that level.
 				</p>
 			</section>
-			<section id="outdeg-info">
+			<section id='outdeg-info'>
 				<p>
 					The median and the maximum number of successor that a location node can have
 				</p>
 			</section>
-			<section id="tokvoc-info">
+			<section id='tokvoc-info'>
 				<p>
 					The location richness of a tree is the proportion between the number of
 					all the points traversed and the number of different locations encountered.
@@ -109,19 +109,28 @@
 					that the user explores many different locations, and rarely returns on the same routes.
 				</p>
 			</section>
+			<section id='entropy-info'>
+				<p>
+					The distribution of the entropies of each location.
+				</p>
+				<p>
+					The entropy is the amount of byte necessary to describe a location, 
+					according to Claude-Shannon's information theory.
+				</p>
+			</section>
 		</div>
 	</main>
 
-	<script type="text/javascript" src="tree_1054708.js"></script>
-	<script type="text/javascript" src="tree_60890.js"></script>
-	<script type="text/javascript" src="tree_501923.js"></script>
-	<script type="text/javascript" src="tree.js"></script>
-	<script type="text/javascript" src="tree_dists.js"></script>
-	<script type="text/javascript" src="outdeg.js"></script>
-	<script type="text/javascript" src="tokvoc.js"></script>
-	<script type="text/javascript" src="barleaves.js"></script>
-	<script type="text/javascript" src="barleaves_dist.js"></script>
-	<script type="text/javascript" src="entropy.js"></script>
-	<script type="text/javascript" src="script.js"></script>
+	<script type='text/javascript' src='tree_1054708.js'></script>
+	<script type='text/javascript' src='tree_60890.js'></script>
+	<script type='text/javascript' src='tree_501923.js'></script>
+	<script type='text/javascript' src='tree.js'></script>
+	<script type='text/javascript' src='tree_dists.js'></script>
+	<script type='text/javascript' src='outdeg.js'></script>
+	<script type='text/javascript' src='tokvoc.js'></script>
+	<script type='text/javascript' src='barleaves.js'></script>
+	<script type='text/javascript' src='barleaves_dist.js'></script>
+	<script type='text/javascript' src='entropy.js'></script>
+	<script type='text/javascript' src='script.js'></script>
 </body>
 </html>
