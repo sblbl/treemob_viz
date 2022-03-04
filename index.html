@@ -68,9 +68,9 @@
 		<div id='info'>
 			<section id='tree-info'>
 				<p>
-					The tree of the user's personal mobility. 
-					It is composed by two prefix trees starting from
-					a unique location: one encodes the paths arriving to it, 
+					The tree of the user's mobility. 
+					It is composed of two prefix trees starting from
+					a unique location: one encodes the paths arriving at it, 
 					the other the paths exiting from the root location.
 				</p>
 				<p>
@@ -78,7 +78,7 @@
 					the travels that share the same initial path.
 				</p>
 				<p>
-					One location can then appear in different branches because it can occour after different sequences of traversed points.
+					One location can then appear in different branches because it can occur after different sequences of traversed points.
 				</p>
 				<p>
 					The trajectories entering the root (the central point) can continue and become outcoming paths.
@@ -87,30 +87,30 @@
 			<section id='treedist-info'>
 				<p>
 					The same representation of the mobility
-					prefix tree but mapped on the distance traveled.
+					prefix tree but mapped on the distance travelled.
 				</p>
 			</section>
 			<section id='distr-info'>
 				<p>
 					For each depth level of the incoming and the outcoming tree, 
 					it represents which percentage of all the leaves (start/end 
-					of a travel)are in that level.
+					of a trip) are in that level.
 				</p>
 			</section>
 			<section id='distrdist-info'>
 				<p>
 					For each km far from the incoming/outcoming tree, 
 					it represents which percentage of all the leaves (start/end 
-					of a travel) are in that level.
+					of a trip) are in that level.
 				</p>
 			</section>
 			<section id='outdeg-info'>
 				<p>
-					The median and the maximum number of successor that a location node can have.
+					The median and the maximum number of different successors that a location node can have.
 				</p>
 				<p>
-					This information is useful to understand how much fragmented is the 
-					user's mobility and how much broad are the hubs (that is locations with many possible following directions).
+					This information is useful to understand how fragmented is the 
+					user's mobility and how broad are the hubs (that is locations with many possible following directions).
 				</p>
 			</section>
 			<section id='tokvoc-info'>
@@ -119,8 +119,8 @@
 					all the points traversed and the number of different locations encountered.
 				</p>
 				<p>
-					It gives information about how much habitudinary is the user: 
-					if the richness is low, in fact, it means that the same locations 
+					It gives information about how much regular are the user's movements: 
+					if the richness is low, it means that the same locations 
 					are traversed quite frequently; on the contrary, an elevated richness means 
 					that the user explores many different locations, and rarely returns on the same routes.
 				</p>
@@ -130,7 +130,7 @@
 					The distribution of the entropies of each location.
 				</p>
 				<p>
-					The entropy is the amount of byte necessary to describe a location, 
+					The entropy is the amount of bytes necessary to describe a location, 
 					according to Claude-Shannon's information theory.
 				</p>
 			</section>
