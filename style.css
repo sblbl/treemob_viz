@@ -38,6 +38,17 @@ h4 {
 	font-weight: 300;
 }
 
+button {
+	border: none;
+	border-radius: 6px;
+	padding: 2px 4px;
+	background-color: #0080FF;
+	color: #FFF;
+	cursor: pointer;
+	float: right;
+	margin-right: 12px;
+}
+
 span.material-icons {
 	font-size: 1rem;
 	vertical-align: middle;
@@ -47,16 +58,57 @@ span.material-icons {
 }
 
 #treemob {
-	width: 100%;
 	display: flex;
+	width: 100%;
 	padding: 0 24px;
 }
 
-#tree-container {
-	width: 75%;
+#treemob-dist {
+	display: flex;
+	width: 100%;
+	padding: 0 24px;
 }
+
+#treemob.hidden {
+	display: none;
+}
+
+
+#treemob-dist.hidden {
+	display: none;
+}
+
+.tree-container {
+	width: 75%;
+	display: block;
+	position:relative;
+}
+
 #distr-container {
 	width: 25%;
+}
+
+#in-tree, #out-tree, #dist-tree-in, #dist-tree-out {
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+#out-tree svg,  #dist-tree-out svg {
+	vertical-align: bottom;
+	bottom: 0;
+}
+
+#bar-in, #bar-out {
+	max-height: 320px;
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+#bar-in svg{
+	vertical-align: top;
+	top: 0;
 }
 
 #stats-container {

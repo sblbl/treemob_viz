@@ -1,27 +1,22 @@
-let statsW = 0
+let statsW = 0, 
+	trees, 
+	currentTree, 
+	showDist = false
 
 $(document).ready(() => {
+	trees = {
+			'501923' : tree_501923, 
+			'1054708' : tree_1054708, 
+			'60890' : tree_60890
+		}
 
-	draw().then(() => handleInteraction())
+	currentTree = trees['501923']
 
-	
+	draw()
+
 
 	$(window).resize(() => {
-		clean().then(() => {draw()}).then(() => handleInteraction())
-	})
-
-})
-
-let handleInteraction = () => {
-	$('.node').hover( e => {
-		let $t = $(e.target),
-			loc = $t.attr('loc')
-		
-		$(`.node:not(.${loc})`).addClass('light')
-		$('tree-link').addClass('light')
-
-	}, e => {
-		$('.light').removeClass('light')
+		clean().then(draw())
 	})
 
 	$('.info-icon').hover(e => {
@@ -48,7 +43,13 @@ let handleInteraction = () => {
 	}, e => {
 		$('.show').removeClass('show')
 	})
-}
+
+	$('.toggle-treemob').click( e => {
+		showDist = !showDist
+		console.log(showDist)
+		clean().then(draw())
+	})
+})
 
 let clean = () => {
 	$('#in-tree').find('svg').remove()
@@ -59,78 +60,159 @@ let clean = () => {
 	$('#tokvoc-all').find('svg').remove()
 	$('#tokvoc-in').find('svg').remove()
 	$('#tokvoc-out').find('svg').remove()
+	$('#dist-tree-in').find('svg').remove()
+	$('#dist-tree-out').find('svg').remove()
+	$('#bar-in-dist').find('svg').remove()
+	$('#bar-out-dist').find('svg').remove()
+	$('#entropy').find('svg').remove()
 	return Promise.resolve()
 }
 
-let first = () => {
-	let in_chart = Tree(in_tree, {
-		label: d => d.name,
-		stroke: '#FFD700',
-		start: 'top'
-	})
-	$('#in-tree').append(in_chart)
+let handlePanels = () => {
+	if (!showDist) {
+		$('#treemob').removeClass('hidden')
+		$('#treemob-dist').addClass('hidden')
+	} else {
+		$('#treemob-dist').removeClass('hidden')
+		$('#treemob').addClass('hidden')
+	}
+
 	return Promise.resolve()
+}
+
+let drawTrees = () => {
+	if (!showDist) {
+		let in_chart = Tree(currentTree.in_tree, {
+			label: d => d.name,
+			n_weights : currentTree.n_weights,
+			stroke: '#FFD700',
+			start: 'top'
+		})
+		$('#in-tree').append(in_chart)
+		let out_chart = Tree(currentTree.out_tree, {
+			label: d => d.name,
+			n_weights : currentTree.n_weights,
+			stroke: '#00E68E',
+			start: 'bottom'
+		})
+		$('#out-tree').append(out_chart)	
+	} else {
+		dist_tree_in = TreeDists(currentTree.in_tree, {
+			label: d => d.name,
+			dist : d => d.dist,
+			n_weights : currentTree.n_weights,
+			max_dist : currentTree.max_dist,
+			stroke: '#FFD700',
+			start: 'top'
+		})
+		$('#dist-tree-in').append(dist_tree_in)
+		dist_tree_out = TreeDists(currentTree.out_tree, {
+			label: d => d.name,
+			dist : d => d.dist,
+			n_weights : currentTree.n_weights,
+			max_dist : currentTree.max_dist,
+			stroke: '#00E68E',
+			start: 'bottom',	
+		})
+
+		$('#dist-tree-out').append(dist_tree_out)
+	}
+	
+	return Promise.resolve()
+}
+
+let drawBars = () => {
+	if (!showDist) {
+		let bars_in = BarLeaves({
+			target : '#in-tree', 
+			start : 'top',
+			color : '#FFD700',
+		})
+		$('#bar-in').append(bars_in)
+		let bars_out = BarLeaves({
+			target : '#out-tree', 
+			start : 'bottom',
+			color : '#00E68E'
+		})
+		$('#bar-out').append(bars_out)
+	} else {
+		let bars_in = BarLeavesDist({
+			target : '#dist-tree-in', 
+			start : 'top',
+			color : '#FFD700',
+		})
+		$('#bar-in-dist').append(bars_in)
+		let bars_out = BarLeavesDist({
+			target : '#dist-tree-out', 
+			start : 'bottom',
+			color : '#00E68E'
+		})
+		$('#bar-out-dist').append(bars_out)
+	}
 }
 
 let draw = () => {
-	
-	first()
-		.then(() => {
-			let out_chart = Tree(out_tree, {
-				label: d => d.name,
-				stroke: '#00E68E',
-				start: 'bottom'
-			})
-			$('#out-tree').append(out_chart)
-		})
+	$('#username').html('#' + currentTree.id)
+	handlePanels()
+		.then(drawTrees())
+		.then(drawBars())
 		.then(() => {
 			statsW = $('.stats')[0].offsetWidth - (parseFloat(getComputedStyle($('.stats')[0]).paddingLeft)*2)
-			let deg_chart = OutDeg({width : statsW})
+			let deg_chart = OutDeg({
+				width : statsW, 
+				height : 220,
+				maxOutDeg_all : currentTree.maxOutDeg_all,
+				medianOutDeg_all : currentTree.medianOutDeg_all,
+
+				maxOutDeg_in : currentTree.maxOutDeg_in,
+				medianOutDeg_in : currentTree.medianOutDeg_in,
+
+				maxOutDeg_out : currentTree.maxOutDeg_out,
+				medianOutDeg_out : currentTree.medianOutDeg_out
+			})
 			$('#outdeg').append(deg_chart)
-		})
-		.then(() => {
-			let bars_in = BarLeaves({
-				target : '#in-tree', 
-				start : 'top',
-				color : '#FFD700'
-			})
-			$('#bar-in').append(bars_in)
-		})
-		.then(() => {
-			let bars_out = BarLeaves({
-				target : '#out-tree', 
-				start : 'bottom',
-				color : '#00E68E'
-			})
-			$('#bar-out').append(bars_out)
-		})
-		.then(() => {
+
 			tokvoc_chart_all = TokenVocab({
 				width : statsW, 
 				height : 48,
-				perc : 39.00, 
+				perc : currentTree.tokvoc_all 
 			})
 			$('#tokvoc-all').append(tokvoc_chart_all)
-		})
-		.then(() => {
+
 			tokvoc_chart_in = TokenVocab({
 				width : statsW, 
 				height : 48,
-				perc : 51.03, 
+				perc : currentTree.tokvoc_in, 
 				color : '#FFD700', 
 				color2 : '#FFEC80',
 			})
 			$('#tokvoc-in').append(tokvoc_chart_in)
-		})
-		.then(() => {
+
 			tokvoc_chart_out = TokenVocab({
 				width : statsW, 
 				height : 48,
-				perc : 41.49, 
+				perc : currentTree.tokvoc_out, 
 				color : '#00E68E', 
 				color2 : '#80FFCE',
 			})
 			$('#tokvoc-out').append(tokvoc_chart_out)
+
+			entropy = Entropy({
+				n_weights : currentTree.n_weights,
+			})
+
+			document.querySelector('#entropy').append(entropy)
+		})
+
+		$('.node').hover( e => {
+			let $t = $(e.target),
+				loc = $t.attr('loc')
+			
+			$(`.node:not(.${loc})`).addClass('light')
+			$('tree-link').addClass('light')
+
+		}, e => {
+			$('.light').removeClass('light')
 		})
 
 		return Promise.resolve()

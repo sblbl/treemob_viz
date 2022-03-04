@@ -1,7 +1,4 @@
-// Copyright 2021 Observable, Inc.
-// Released under the ISC license.
-// edited from https://observablehq.com/@d3/tree
-function Tree(data, { 
+function TreeDists(data, { 
 		path, 
 		id = Array.isArray(data) ? d => d.id : null, 
 		parentId = Array.isArray(data) ? d => d.parentId : null, 
@@ -10,6 +7,9 @@ function Tree(data, {
 		n_weights = null,
 		sort, 
 		label, 
+		dist, 
+		max_dist,
+		tick_dist = 1000,
 		title, 
 		width = 500, 
 		height = 320, 
@@ -27,17 +27,23 @@ function Tree(data, {
 		start = 'top'
 	} = {}) {
 
-	width = $('#tree-container').width()
+	width = $('#tree-container-distances').width()
 
 	const root = path != null ? d3.stratify().path(path)(data)
 			: id != null || parentId != null ? d3.stratify().id(id).parentId(parentId)(data)
 			: d3.hierarchy(data, children);
 	// Compute labels and titles.
 	const descendants = root.descendants();
-	const L = label == null ? null : descendants.map(d => label(d.data, d));
+	const L = label == null ? null : descendants.map(d => label(d.data, d))
+	const D = dist == null ? null : descendants.map(d => dist(d.data, d))
+
+
+	let scaley = d3.scaleLinear()
+			.domain([d3.min(D), max_dist])
+			.range(start == 'top' ? [padding, height-padding-12] : [height-padding, padding+12])
 
 	// Sort the nodes.
-	if (sort != null) root.sort(sort);
+	if (sort != null) root.sort(sort)
 
 	// Compute the layout.
 	const dx = 10
@@ -48,6 +54,10 @@ function Tree(data, {
 	let y0 = Infinity;
 	let y1 = -y0;
 
+	root.each((d, i) => {
+		d.y = scaley(D[i])
+	})
+
 	root.each(d => {
 		if (d.y > y1) y1 = d.y
 		if (d.y < y0) y0 = d.y
@@ -57,36 +67,31 @@ function Tree(data, {
 			.attr('width', width)
 			.attr('height', height)
 
-	let layers = Array.from(d3.group(root.descendants(), d => d.depth).keys())
-
-	let scaley = d3.scaleLinear()
-			.domain([0, d3.max(layers)])
-			.range(start == 'top' ? [padding, dy * (layers.length-1)] : [height-padding, height-padding-dy * (layers.length-1)])
+	let layers = Array.from({length: parseInt(max_dist / tick_dist)}, (v, i) => i)
 
 	svg.append('g')
 		.selectAll('line')
 			.data(layers)
 			.join('line')
-				.attr('class', 'grid')
+				.attr('class', 'grid dist-grid')
 				.attr('stroke', stroke)
 				.attr('stroke-width', '1')
-				.attr('stroke-opacity', d => d == 0 ? 0 : .2)
+				.attr('stroke-opacity', .2)
 				.attr('x1', padding)
-				.attr('x2', width - padding - 24)
-				.attr('y1', d => scaley(d))
-				.attr('y2', d => scaley(d))
-
+				.attr('x2', width - padding - 32)
+				.attr('y1', d => scaley((d + 1) * tick_dist))
+				.attr('y2', d => scaley((d + 1) * tick_dist))
+	
 	svg.append('g')
 		.selectAll('text')
 			.data(layers)
 			.join('text')
-				.text((d, i) => i)
+				.text(d => parseInt(((d + 1) * tick_dist) / 1000) + 'km')
 				.attr('class', 'grid-label')
-				.attr('x', width - padding - 16)
-				.attr('y', d => scaley(d) + 7)
+				.attr('x', width - padding - 24)
+				.attr('y', d => scaley((d + 1) * tick_dist) + 7)
 				.attr('fill', stroke)
 				.attr('font-size', 13)
-				.attr('opacity', (d, i) => i == 0 ? 0 : 1)
 
 
 	svg.append('g')
@@ -101,7 +106,7 @@ function Tree(data, {
 		.join('path')
 			.attr('d', d3.linkVertical()
 				.x(d => d.x + (width/2))
-				.y(d => (start == 'top') ? d.y : height - padding - d.y))
+				.y((d, i) => d.y))
 			.attr('from', d => d.source.data.name)
 			.attr('to', d => d.target.data.name)
 			.attr('class', 'tree-link')
@@ -127,28 +132,23 @@ function Tree(data, {
 				return rad
 			})
 			.attr('loc', (d, i) => L[i])
-			.attr('weight', (d, i) => n_weights[L[i]])
 			.attr('cx', d => d.x + (width/2))
-			.attr('cy', d => (start == 'top') ? d.y : height - padding - d.y)
+			.attr('cy', (d, i) => d.y)
 			.attr('style', 'cursor : pointer')
 
 	if (start == 'top') {
 		svg.append('text')
 		.text('Incoming tree')
 		.attr('x', padding)
-		.attr('y', padding + dy + 4)
+		.attr('y', padding + dy + 16)
 		.attr('fill', '#FFF')
 	} else {
 		svg.append('text')
 		.text('Outcoming tree')
 		.attr('x', padding)
-		.attr('y', height - padding - dy + 4)
+		.attr('y', height - padding - dy - 6)
 		.attr('fill', '#FFF')
 	}
-
 	
 	return svg.node()
 }
-
-
-

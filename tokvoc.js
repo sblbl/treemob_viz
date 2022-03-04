@@ -52,25 +52,3 @@ function TokenVocab({
 	return svg.node()
 
 }
-
-/*tokvoc_chart_all = TokenVocab({
-	width : statsW, 
-	height : 48,
-	perc : 5, 
-})
-
-tokvoc_chart_in = TokenVocab({
-	width : statsW, 
-	height : 48,
-	perc : 10, 
-	color : '#FFD700', 
-	color2 : '#FFEC80',
-})
-
-tokvoc_chart_out = TokenVocab({
-	width : statsW, 
-	height : 48,
-	perc : 15, 
-	color : '#00E68E', 
-	color2 : '#80FFCE',
-})*/
