@@ -21,7 +21,8 @@ function OutDeg({
 
 		strokeWidth = 1.8, 
 		strokeOpacity = 0.4, 
-		padding = 8,
+		padding = 12,
+		paddingT = 8
 	} = {}){
 
 	const svg = d3.create('svg')
@@ -48,21 +49,21 @@ function OutDeg({
 	for (let i = 0; i < maxOutDeg_all; i++) {
 		links_all.push({
 			source : sourceCoords, 
-			target : [xscale(i), (height / 2) - padding - 22]
+			target : [xscale(i), (height / 2) - paddingT - 22]
 		})
 	}
 
 	for (let i = 0; i < maxOutDeg_in; i++) {
 		links_in.push({
 			source : sourceCoords, 
-			target : [xscale(i), (height) - padding - 22]
+			target : [xscale(i), (height) - paddingT - 22]
 		})
 	}
 
 	for (let i = 0; i < maxOutDeg_out; i++) {
 		links_out.push({
 			source : sourceCoords, 
-			target : [xscale(i), padding + 22]
+			target : [xscale(i), paddingT + 22]
 		})
 	}
 
@@ -82,14 +83,14 @@ function OutDeg({
 	svg.append('text')
 		.text(medianOutDeg_in)
 		.attr('x', xscale(medianOutDeg_in -1))
-		.attr('y', height - padding)
+		.attr('y', height - paddingT)
 		.attr('text-anchor', 'middle')
 		.attr('fill', '#FFF')
 
 	svg.append('text')
 		.text(maxOutDeg_in)
 		.attr('x', xscale(maxOutDeg_in -1))
-		.attr('y', height - padding)
+		.attr('y', height - paddingT)
 		.attr('text-anchor', 'middle')
 		.attr('fill', '#FFF')
 

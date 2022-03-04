@@ -207,6 +207,7 @@ let draw = () => {
 			$('#tokvoc-out').append(tokvoc_chart_out)
 
 			entropy = Entropy({
+				width : statsW, 
 				n_weights : currentTree.n_weights,
 				height : 180,
 			})
@@ -230,7 +231,7 @@ let draw = () => {
 			let $t = $(e.target),
 				classes = $t.attr('class').split(/\s+/)
 			for (i = 0; i < classes.length; i ++) {
-				
+
 			}
 		}, e => {
 			$('.light').removeClass('light')
